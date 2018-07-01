@@ -1,0 +1,109 @@
+\documentclass[11pt]{report} %% 12pt Norberts Vorlage
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+%\usepackage{showframe}
+\usepackage{% 
+	ae,
+	array,
+	newtxtext,  %% hier kann man die Schriftart einstellen
+	graphicx,
+	url,
+	units,
+	pgfplotstable,
+	color,
+	colortbl,
+	pgfplots,
+	cleveref,
+	float,
+	lipsum,
+	textcomp,
+	hyperref,
+	gensymb,	
+	amsmath,
+	hyphenat,	 	 
+	mathtools,
+	mathrsfs,
+	physics,
+	import,
+	amssymb}
+	\usepackage[german,british]{babel}
+	\usepackage[straightlabels, american, europeanvoltages]{circuitikz}
+	\usepackage[a4paper, total={16cm, 24cm}]{geometry} % Reduce margin size from 0.7*paper size
+	\usepackage[titletoc]{appendix}
+	\usepackage[margin=0.5cm]{caption}
+	\usepackage[allow-number-unit-breaks]{siunitx}
+
+%%%%%%%%%%%%% CUSTOM COMMANDS %%%%%%%%%%%%%%
+%\newcommand{\tightoverset}[2]{\mathop{#2}\limits^{\vbox to -.5ex{\kern-0.75ex\hbox{$#1$}\vss}}}
+\renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\newcommand{\mat}[1]{\underline{\mathbf{#1}}}
+\newcommand{\st}[1]{$_{\text{#1}}$}
+\newcommand{\er}{$\epsilon_r$}
+\newcommand{\tand}{$\tangent\delta$}
+\newcommand{\te}{TE$_{\text{011}}$}
+
+%%%%%%%%%%%%%% PGF/TIKZ SETUP %%%%%%%%%%%%%%%%
+\pgfplotsset{compat=1.13}
+\usetikzlibrary{calc, arrows, graphs,decorations.markings}
+\usepgfplotslibrary{smithchart, external, units}
+%\tikzexternalize
+
+%%%%%%%%%%%%%% OTHERS %%%%%%%%%%%%%%%%%%%%
+\sisetup{detect-weight=true, detect-family=true}
+\graphicspath{{./figures/}}
+\hypersetup{bookmarksnumbered,
+			hidelinks,
+    		pdfauthor={Max Gattringer},
+            pdftitle={An Improved Model for Complex Permittivity Measurements with a Split-Cylinder Resonator},
+            pdfsubject={Master thesis about dielectric measurements at microwave frequencies using a split-cylinder resonator},
+            pdfkeywords={dielectric properties; printed-circuit boards; substrates, split-cylinder resonator; microwaves; quality factor measurements; permittivity; cylindrical cavity; mode-matching; cavity; loss tangent; dielectric; microwave substrates; complex permittivity; material properties, dielectric measurements},
+            pdfproducer={},
+            pdfcreator={}
+    } % Hyperlinks, PDF Bookmarking
+
+%%%%%%%%%%%%%% UNICODE CHARS %%%%%%%%%%%%%%%%%%%
+\DeclareUnicodeCharacter{221E}{$\infty$}
+\DeclareUnicodeCharacter{03C3}{$\sigma$}
+
+%%%%%%%%%%%%%%% HYPENATIONS %%%%%%%%%%%%%%%%%%%%
+\hyphenation{per-mit-tiv-i-ty}
+\hyphenation{Ja-ne-zic}
+
+
+%%%%%%%%%%%%% DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%%%%%%%%%%% TITLEPAGE & DEDICATION %%%%%%%%%%
+\input{chapters/titlepage}
+%%%%%%%%%%% ACKNOWLEDGEMENTS %%%%%%%%%%%%%%%%
+\input{chapters/acknowledgements}
+%%%%%%%%%%% ABSTRACT %%%%%%%%%%%%%%%%%%%%%%%%
+\input{chapters/abstract}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{IEEEtran}
+%%%%%%%%%%%%% TOC %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{tocdepth}{1}
+\renewcommand*\contentsname{Table of Contents}
+\tableofcontents
+\addcontentsline{toc}{chapter}{Table of Contents}
+%%%%%%%%%%%%% CHAPTERS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\input{chapters/introduction} % Introduction
+\input{chapters/chapter1}     % Dielectric measurement techniques
+\input{chapters/chapter2}     % Quality factor measurements
+\input{chapters/chapter3}     % Split Cylinder Resonator
+\input{chapters/chapter4}     % M12 model
+\input{chapters/chapter5}     % Measurement results
+\input{chapters/conclusion}   % Conclusion
+%%%%%%%%%% APPENDICES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{appendices}
+\chapter{}
+\input{chapters/appendixA}
+\input{chapters/appendixB}
+\input{chapters/appendixC}
+\end{appendices}
+%%%%%%%%%% BILIOGRAPHY %%%%%%%%%%%%%%%%%
+\bibliography{BIBLIOGRAPHY}
+\addcontentsline{toc}{chapter}{Bibliography}
+\input{chapters/codeofconduct}
+\end{document}

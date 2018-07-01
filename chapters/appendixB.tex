@@ -1,0 +1,146 @@
+\section{Transmission Coefficient of a Coupled Resonant Circuit}\label{app:B}
+
+\begin{figure}
+\centering
+\begin{circuitikz}
+\ctikzset {bipoles/length=0.9cm}
+%\draw[step=1.0,black,thin] (0,0) grid (15,10);
+% Source block
+\draw (1.5,2) to[R=$Z_0$,-] (0,2)
+		to[sV_=$U_s$] (0,0)
+		to[short,-] (1.5,0);
+
+%% TWO-PORT 1
+% Reference point P1 and dimensions (modify only these!)
+\def\TPxH{2.5}
+\def\TPxW{1.75}
+\def\TPxl{0.5}
+\node [] (P1) at (1.5,2) {};
+% Port one
+\draw (P1) to[short,-,i=$a_1$] ($(P1)+(\TPxl,0)$);
+\draw ($(P1)+(0,-2)$) to[short,-,i_<=$b_1$] ($(P1)+(\TPxl,-2)$);
+% Port two
+\node [] (P2) at ($(P1)+(2*\TPxl+\TPxW,0)$) {};
+\draw (P2) to[short,-,i_<=$a_2$] ($(P2)+(-0.5,0)$);
+\draw ($(P2)+(0,-2)$) to[short,-,i=$b_2$] ($(P2)+(-0.5,-2)$);
+% Frame
+\draw ($(P1)+(\TPxl,0.5*\TPxH-1) $) rectangle ($(P1)+(\TPxW+\TPxl,-2-0.5*\TPxH+1)$);
+% Label
+\node [font=\fontsize{14.4}{14.4}] at ($(P1)+(0.5*\TPxW+\TPxl,-1)$) {$\kappa_1$};
+%% END TWO-PORT
+% Two-Port output plus reflection coefficient
+
+% RLC circuit
+\node [] (RLC) at ($(P2)+(2,0)$) {};
+\draw ($(RLC)+(-2,0)$) to[short] ($(RLC)+(1,0)$);
+\draw ($(RLC)+(-2,-2)$) to[short] ($(RLC)+(1,-2)$);
+\draw ($(RLC)+(-1,0)$) to[R=$G$,*-*] ($(RLC)+(-1,-2)$);
+\draw (RLC) to[C=$C$,*-*] ($(RLC)+(0,-2)$);
+\draw ($(RLC)+(1,0)$) to[L=$L$,*-*] ($(RLC)+(1,-2)$)
+					  to[short] +(1,0)
+					  to[open] +(0,2)
+					  to[short] +(-1,0);
+\draw ($(RLC)+(0,0.5)$) node{$Y_R(\delta)$};
+
+
+%% TWO-PORT 2
+% Reference point P1 and dimensions (modify only these!)
+\def\TPxH{2.5}
+\def\TPxW{1.75}
+\def\TPxl{0.5}
+\node [] (P3) at ($(RLC)+(2,0)$) {};
+% Port one
+\draw (P3) to[short,-,i=$a_3$] ($(P3)+(\TPxl,0)$);
+\draw ($(P3)+(0,-2)$) to[short,-,i_<=$b_3$] ($(P3)+(\TPxl,-2)$);
+% Port two
+\node [] (P4) at ($(P3)+(2*\TPxl+\TPxW,0)$) {};
+\draw (P4) to[short,-,i_<=$a_4$] ($(P4)+(-0.5,0)$);
+\draw ($(P4)+(0,-2)$) to[short,-,i=$b_4$] ($(P4)+(-0.5,-2)$);
+% Frame
+\draw ($(P3)+(\TPxl,0.5*\TPxH-1) $) rectangle ($(P3)+(\TPxW+\TPxl,-2-0.5*\TPxH+1)$);
+% Label
+\node [font=\fontsize{14.4}{14.4}] at ($(P3)+(0.5*\TPxW+\TPxl,-1)$) {$\kappa_2$};
+%% END TWO-PORT
+% Two-Port output plus reflection coefficient
+
+%% IMPEDANCE
+\draw (P4) to[short,-] +(1,0)
+	       to[R=$Z_0$] +(0,-2)
+	       to[short] +(-1,0);
+%% REFERENCE PLANES
+\draw [thin,dashed](1.5,-0.5) node[below] {1} -- +(0,3) node [midway,font=\fontsize{9}{9}] {$Z_0$};
+\draw [thin,dashed](4.25,-0.5) node[below] {2} -- +(0,3) node [midway,font=\fontsize{9}{9}] {$Z_1$};
+\draw [thin,dashed](8.25,-0.5) node[below] {3} -- +(0,3) node [midway,font=\fontsize{9}{9}] {$Z_2^*$};
+\draw [thin,dashed](11,-0.5) node[below] {4} -- +(0,3) node [midway,font=\fontsize{9}{9}] {$Z_0$};
+
+
+
+%% INPUT & OUTPUT IMPEDANCE
+\draw[line width=0.5,-implies, double distance=2] ($(P2)+(0.5,-2.25)$) node[below] {$Z_{1}$}
+										to +(0,0.5)
+										to +(-0.75,0.5);
+										
+\draw[line width=0.5,-implies, double distance=2] ($(P3)+(-0.5,-2.25)$) node[below] {$Z_{2}$}
+										to +(0,0.5)
+										to +(0.75,0.5);
+
+
+\end{circuitikz}
+\caption{Transmission-type measurement}\label{fig:ttype}
+\end{figure}
+
+In Chapter \ref{ch:qfactor} we stated that any linear resonant circuit (RLC) draws a circle $(1+jQ\delta)$ on a Smith chart and, therefore, has a very similar frequency response. To show that this statement applies to any resonant circuit, we start with a model of a transmission-type measurement shown in Fig. \ref{fig:ttype}. The model in Fig. \ref{fig:ttype} features the transmission coefficient measurement of a linear resonant circuit with two coupling networks, $\kappa_1$ and $\kappa_2$, connected to port 1 and port 2 of the resonant circuit. At port 1 (ref. 2) we measure the output impedance $Z_1$ of the coupling network $\kappa_1$ and the source impedance $Z_0$ and at port 2 we measure the input impedance $Z_2$ of the coupling network $\kappa_2$ and the load $Z_0$. If we now choose the reference impedances at reference plane 2 and 3 cleverly, we can eliminate the output reflection coefficient of the source and the input reflection coefficient of the load. The same applies to reference plane 1 and 4, where the source and the load are matched to the reference impedance of the coupling networks. If we take a look at the signal flow graph of Fig. \ref{fig:sigttype}, it is obvious that if the output reflection coefficient at reference plane 2 is zero, then $S_{22}^1=0$ must apply to coupling network 1. The same applies to coupling network $\kappa_2$ and the input reflection coefficient at reference plane 3, where $S_{11}^2=0$. With these coefficients of the scattering matrices disappearing, we can conveniently simplify the signal flow graph of Fig. \ref{fig:sigttype} and yield the following for the transmission coefficient
+\begin{equation}\label{eq:S41}
+S_{41}=S_{21}^1S_{21}^RS_{21}^2\text{.}
+\end{equation}
+
+\begin{figure}
+\centering
+\begin{tikzpicture}[wave/.style={draw,circle, inner sep=1.5pt},conn/.style={-,font=\fontsize{8}{9},decoration={markings,
+        mark=at position \halfway with \arrow{latex}},
+        postaction=decorate}]
+\newcommand*{\halfway}{0.5*\pgfdecoratedpathlength+.5*3pt};
+\node[wave, label=above:$a_s$] (as) at (0,2) {};
+\node[wave, label=above:$a_1$] (a1) at (2.5,2) {};
+\node[wave, label=above:$a_2$] (a2) at (5,2) {};
+\node[wave, label=above:$a_3$] (a3) at (7.5,2) {};
+\node[wave, label=above:$a_4$] (a4) at (10,2) {};
+
+\node[wave, label=below:$b_1$] (b1) at (2.5,0) {};
+\node[wave, label=below:$b_2$] (b2) at (5,0) {};
+\node[wave, label=below:$b_3$] (b3) at (7.5,0) {};
+\node[wave, label=below:$b_4$] (b4) at (10,0) {};
+
+\path (as) edge[conn] node[above] {$1$} (a1);
+\path (a1) edge[conn] node[above] {$S_{21}^1$} (a2);
+\path (a2) edge[conn] node[above] {$S_{21}^R$} (a3);
+\path (a3) edge[conn] node[above] {$S_{21}^2$} (a4);
+\path (b4) edge[conn] node[below] {$S_{12}^2$} (b3);
+\path (b3) edge[conn] node[below] {$S_{12}^R$} (b2);
+\path (b2) edge[conn] node[below] {$S_{12}^1$} (b1);
+\path[bend left] (b1) edge[conn] node[left] {$\Gamma_S=0$} (a1);
+\path[bend left] (a1) edge[conn] node[right] {$S_{11}^1$} (b1);
+\path[bend left] (b2) edge[conn] node[left] {$S_{22}^1$} (a2);
+\path[bend left] (a2) edge[conn] node[right] {$S_{11}^R$} (b2);
+\path[bend left] (b3) edge[conn] node[left] {$S_{22}^R$} (a3);
+\path[bend left] (a3) edge[conn] node[right] {$S_{11}^2$} (b3);
+\path[bend left] (b4) edge[conn] node[left] {$S_{22}^2$} (a4);
+\path[bend left] (a4) edge[conn] node[right] {$\Gamma_L=0$} (b4);
+
+
+\end{tikzpicture}
+\caption{Signal flow graph of the measurement setup in Fig. \ref{fig:ttype}.}\label{fig:sigttype}
+\end{figure}
+
+If we calculate the transmission coefficient $S_{21}^R$ of the resonant circuit using the appropriate reference impedances $Z_1$ and $Z_2^*$, we get for
+\begin{align}
+S_{21}^R&=\sqrt{\frac{R_1}{R_2}}\frac{Y_1}{Y_1+Y_2+Y_R}=\sqrt{\frac{R_1}{R_2}}\frac{Y_1}{G_1+jB_1+G_2+jB_2+G(1+jQ\delta)}\\
+	  &=\sqrt{\frac{R_1}{R_2}}\frac{Y_1}{(G+G_1+G_2)(1+jQ_L(\delta+\frac{B_1}{GQ_0}+\frac{B_2}{GQ_0}))}\text{,} \label{eq:S21r}
+\end{align}
+in which $R_1=\Re{Z_1}$, $R_2=\Re{Z_2}$, $Y_1=1/Z_1=G_1+jB_1$, $Y_2=1/Z_2=G_2+jB_2$  and $Y_R$ is the impedance of the resonant circuit. Obviously, the unloaded resonator becomes loaded by the impedances $Z_1$ and $Z_2$, which change the detuning factor $\delta_L=-\frac{B_1}{GQ_0}-\frac{B_2}{GQ_0}$ and the quality factor $Q_L=Q_0/(1+\frac{G_1}{G}+\frac{G_2}{G})=Q_0/(1+\kappa_1+\kappa_2)$.
+
+For the transmission coefficient $S_{41}$ we can combine the results in \eqref{eq:S41} and \eqref{eq:S21r} to the following expression
+\begin{equation}\label{eq:tr_result}
+S_{41}=\sqrt{\frac{R_1}{R_2}}\frac{S_{21}^1S_{21}^2Y_1}{(G+G_1+G_2)(1+jQ_L(\delta+\frac{B_1}{GQ_0}+\frac{B_2}{GQ_0}))}\text{.}
+\end{equation}
+Seeing that Equation \eqref{eq:tr_result} also has a $(1+jQ_L\delta)$-term in its denominator, we have shown that a resonant circuit coupled to any two coupling networks will also have a similar frequency response around its resonant frequency provided that the frequency responses of the coupling networks are sufficiently flat in the frequency range around the resonant frequency.

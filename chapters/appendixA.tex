@@ -1,0 +1,117 @@
+\section{Reflection Coefficient of a Coupled Resonant Circuit}\label{app:A}
+\begin{figure}
+\centering
+\begin{circuitikz}
+\ctikzset {bipoles/length=0.9cm}
+%\draw[step=1.0,black,thin] (0,0) grid (15,10);
+% Source block
+\draw (2,2) to[R=$Z_0$,-] (0,2)
+		to[sV_=$U_s$] (0,0)
+		to[short,-] (2,0);
+
+%% TWO-PORT
+% Reference point P1 and dimensions (modify only these!)
+\def\TPxH{2.5}
+\def\TPxW{1.75}
+\def\TPxl{0.5}
+\node [] (P1) at (2,2) {};
+% Port one
+\draw (P1) to[short,-,i=$i_1$] ($(P1)+(\TPxl,0)$);
+\draw ($(P1)+(0,-2)$) to[short,-] ($(P1)+(\TPxl,-2)$);
+\draw (P1) to[open, v=$U_1$] ($(P1)+(0,-2)$);
+% Port two
+\node [] (P2) at ($(P1)+(2*\TPxl+\TPxW,0)$) {};
+\draw (P2) to[short,-,i_=$i_2$] ($(P2)+(-0.5,0)$);
+\draw ($(P2)+(0,-2)$) to[short,-] ($(P2)+(-0.5,-2)$);
+\draw (P2) to[open, v^=$U_2$] ($(P2)+(0,-2)$);
+% Frame
+\draw ($(P1)+(\TPxl,0.5*\TPxH-1) $) rectangle ($(P1)+(\TPxW+\TPxl,-2-0.5*\TPxH+1)$);
+% Label
+\node [font=\fontsize{15}{15}] at ($(P1)+(0.5*\TPxW+\TPxl,-1)$) {\textbf{Y}};
+%% END TWO-PORT
+% Two-Port output plus reflection coefficient
+%
+\draw (P2) to[short,-o] ($(P2)+(0.5,0)$);
+\draw ($(P2)+(0,-2)$) to[short,-o] ($(P2)+(0.5,-2)$);
+
+\node [] (Yin) at ($(P2)+(1.5,-2)$) {$Y_{in}$};
+\draw[line width=0.5,-implies, double distance=2] (Yin.north) to ($(Yin)+(0,0.5)$) to ($(Yin)+(-0.75,0.5)$);
+\end{circuitikz}
+\caption{Input resistance of a two-port coupling network}\label{fig:yin}
+\end{figure}
+
+In Chapter \ref{ch:qfactor} we have discussed the reflection-type measurement of resonant circuits, where we provided an expression for the reflection coefficient of a resonator with arbitrary coupling. The coupling was modelled using an admittance matrix $Y$, which can serve as a model for an arbitrary two-port. Since we did not find this expression anywhere else in the literature, we decided to add it to this treatise. Please note that we suspect that a similar derivation can be found in \cite{kajfezq}, but we did not have a copy at hand to verify this. It is a very convenient expression, which allows us to prove that the reflection coefficient of any resonator is shaped similarly, independent of the coupling network.
+
+To derive this expression, we calculate the input admittance of an arbitrary two-port shown in Fig. \ref{fig:yin}, which is fed by an ideal voltage source with source impedance $Z_0$. The input admittance $Y_{in}$ equals
+\begin{eqnarray}\label{eq:i_res}
+Y_{in}=Y_{22}-\frac{Y_{21}Y_{12}}{Y_{11}+Y_0}=G_{in}+jB_{in}, & Y=\begin{pmatrix}Y_{11} & Y_{12} \\ Y_{21} & Y_{22} \end{pmatrix}
+\end{eqnarray}
+where $Y_0=1/Z_0$ is the source admittance of the source and $Y$ is the admittance matrix of the coupling network.
+
+\begin{figure}
+\centering
+\begin{circuitikz}
+\ctikzset {bipoles/length=0.9cm}
+%\draw[step=1.0,black,thin] (0,0) grid (15,10);
+
+% Two-Port output plus reflection coefficient
+%
+\draw (P1) to[short,-o] ($(P1)+(-0.5,0)$);
+\draw ($(P1)+(0,-2)$) to[short,-o] ($(P1)+(-0.5,-2)$);
+
+\node [] (Yout) at ($(P1)+(-1.5,-2)$) {$Y_{out}$};
+\draw[line width=0.5,-implies, double distance=2] (Yout.north) to ($(Yout)+(0,0.5)$) to ($(Yout)+(0.75,0.5)$);
+
+%% TWO-PORT
+% Reference point P1 and dimensions (modify only these!)
+\def\TPxH{2.5}
+\def\TPxW{1.75}
+\def\TPxl{0.5}
+\node [] (P1) at (2,2) {};
+% Port one
+\draw (P1) to[short,-,i=$i_1$] ($(P1)+(\TPxl,0)$);
+\draw ($(P1)+(0,-2)$) to[short,-] ($(P1)+(\TPxl,-2)$);
+\draw (P1) to[open, v=$U_1$] ($(P1)+(0,-2)$);
+% Port two
+\node [] (P2) at ($(P1)+(2*\TPxl+\TPxW,0)$) {};
+\draw (P2) to[short,i_=$i_2$] ($(P2)+(-0.5,0)$);
+\draw ($(P2)+(0,-2)$) to[short] ($(P2)+(-0.5,-2)$);
+\draw (P2) to[open, v^=$U_2$] ($(P2)+(0,-2)$);
+% Frame
+\draw ($(P1)+(\TPxl,0.5*\TPxH-1) $) rectangle ($(P1)+(\TPxW+\TPxl,-2-0.5*\TPxH+1)$);
+% Label
+\node [font=\fontsize{15}{15}] at ($(P1)+(0.5*\TPxW+\TPxl,-1)$) {\textbf{Y}};
+%% END TWO-PORT
+
+% RLC circuit
+\node [] (RLC) at ($(P2)+(2,0)$) {};
+\draw ($(RLC)+(-1,0)$) to[short] ($(RLC)+(1,0)$);
+\draw ($(RLC)+(-1,-2)$) to[short] ($(RLC)+(1,-2)$);
+\draw ($(RLC)+(-1,0)$) to[R=$G$,*-*] ($(RLC)+(-1,-2)$);
+\draw (RLC) to[C=$C$,*-*] ($(RLC)+(0,-2)$);
+\draw ($(RLC)+(1,0)$) to[L=$L$] ($(RLC)+(1,-2)$);
+\draw ($(RLC)+(0,-2.5)$) node{$Y_R(\delta)$};
+% Connection RLC cirucit
+\draw (P2) to[short] (RLC);
+\draw ($(P2)+(0,-2)$) to[short] ($(RLC)+(0,-2)$);
+
+\end{circuitikz}
+\caption{Input resistance of a two-port coupling network}\label{fig:yout}
+\end{figure}
+
+To calculate the reflection coefficient, we measure the output admittance on port one. For the measurement we remove the circuitry on port one and add a shunt RLC circuit on port two. (Fig. \ref{fig:yout}) As previously mentioned the shunt RLC circuit is a model for a single mode of a microwave cavity, which can be shown using the Foster theorem. The admittance of the RLC circuit is $Y_R=G(1+jQ_0\delta)$, where $\delta(f)=\frac{f}{f_0}-\frac{f_0}{f}$ is again the detuning factor and $Q_0=\omega L/C$ is the unloaded quality factor of the circuit. The output impedance is
+\begin{equation}
+Y_{out}=Y_{11}-\frac{Y_{12}Y_{21}}{Y_{22}+Y_{R}}\text{.}
+\end{equation}
+With the output impedance at hand, we can calculate the reflection coefficient for a reference admittance $Y_0=1/Z_0$.
+\begin{equation}
+\Gamma=\frac{Y_0-Y_{out}}{Y_0+Y_{out}}=\frac{Y_0-Y_{11}}{Y_0+Y_{11}}+\frac{2Y_0Y_{12}Y_{21}}{(Y_{0}+Y_{11})^2(Y_{in}+Y_R)}
+\end{equation}
+Equation \eqref{fig:yin} was used to simplify the expression. When we further insert the admittances $Y_R$ and $Y_{in}$, and introduce a loaded quality factor $Q_L=Q_0/(1+G_{in}/G)$, we yield:
+\begin{align}
+\Gamma&=\frac{Y_0-Y_{11}}{Y_0+Y_{11}}+\frac{2Y_0Y_{12}Y_{21}}{(Y_{0}+Y_{11})^2(G_{in}+jB_{in}+G(1+jQ_0\delta))}\\
+&=\frac{Y_0-Y_{11}}{Y_0+Y_{11}}+\frac{2Y_0Y_{12}Y_{21}}{(Y_{0}+Y_{11})^2(G_{in}+G)(1+jQ_L(\delta+\frac{B_{in}}{GQ_0})))} \label{fig:eq_rc_final}
+\end{align}
+If we look for the resonance term in the reflection coefficient of Eq. \eqref{fig:eq_rc_final}, we can see that the resonance term $1+jQ_L\delta$ lies in the denominator. All the other factors of the equation are either add up or divided by the resonance. Since we know that many resonances have a very narrow bandwidth, we can safely assume for many coupling networks that the resonance dominates the frequency response of the reflection coefficient and all other factors vary far more slowly than the resonance. This shows that we have proven that any resonator with a flat frequency response around the resonant frequency draws a circle in the complex reflection coefficient plane, which can be used to measure the properties of the resonance. Accordingly, if the frequency response is not flat, for example due to resonances in the coupling network, the resonance cannot be measured through this coupling network.
+
+
